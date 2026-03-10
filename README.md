@@ -1,30 +1,28 @@
 # Mealie
 
-Self-hosted recipe manager running in Docker.
+[Mealie](https://mealie.io) is a self-hosted recipe manager and meal planner. My wife and I use it to keep all of our recipes in one place, organize them into cookbooks, and build out our grocery lists together before shopping.
 
-## Setup
+## What we use it for
 
-1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-2. Clone this repo
-3. Run the stack:
+- **Recipes** — importing recipes from the web, adding our own, and keeping everything organized with tags and categories
+- **Cookbooks** — grouping recipes into themed collections (weeknight dinners, holiday baking, etc.)
+- **Grocery lists** — building shared shopping lists directly from meal plans so we're both on the same page at the store
+- **Meal planning** — scheduling out the week so we know what we're cooking and what we need to buy
+
+## Running it
 
 ```bash
 docker compose up -d
 ```
 
-4. Open [http://localhost:9925](http://localhost:9925)
-5. Log in with the default credentials:
-   - **Email:** `changeme@example.com`
-   - **Password:** `MyPassword`
-
-> Change your email and password after first login.
+Environment variables are loaded from `.env` — copy `.env.example` if starting fresh and fill in your values.
 
 ## Stack
 
-| Service | Image | Port |
-|---------|-------|------|
-| Mealie  | `ghcr.io/mealie-recipes/mealie:latest` | `9925` |
+| Service | Image |
+|---------|-------|
+| Mealie  | `ghcr.io/mealie-recipes/mealie:v3.12.0` |
 
 ## Data
 
-Recipe data, images, and the database are persisted in the `./data` directory (excluded from git).
+All recipe data, images, cookbooks, and the database are persisted in the `./data` directory (excluded from git).
