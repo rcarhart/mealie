@@ -24,22 +24,20 @@ services:
     depends_on:
       - mealie
 
-  mealie-backup:
-    image: alpine:3.20
-    container_name: mealie-backup
-    restart: unless-stopped
-    depends_on:
-      - mealie
-    working_dir: /work
-    environment:
-      TZ: ${TZ}
-    volumes:
-      - ./data:/source:ro
-      - ./backups:/backups
-      - ./scripts:/scripts:ro
-    command: >
-      sh -c "
-      chmod +x /scripts/backup-mealie.sh &&
-      echo '0 3 * * * /scripts/backup-mealie.sh >> /proc/1/fd/1 2>> /proc/1/fd/2' > /etc/crontabs/root &&
-      crond -f -l 2
-      "
+mealie-backup:
+  image: alpine:3.20
+  container_name: mealie-backup
+  restart: unless-stopped
+  depends_on:
+    - mealie
+  volumes:
+    - ./data:/source
+    - ./backups:/backups
+    - ./scripts:/scripts
+  command: >
+    sh -c "
+    apk add --no-cache sqlite &&
+    chmod +x /scripts/backup-mealie.sh &&
+    echo '0 3 * * * /scripts/backup-mealie.sh' > /etc/crontabs/root &&
+    crond -f
+    "

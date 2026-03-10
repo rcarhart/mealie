@@ -1,12 +1,19 @@
 #!/bin/sh
-set -eu
+set -e
 
-STAMP="$(date +%Y-%m-%d_%H-%M-%S)"
-DEST="/backups/mealie-data-${STAMP}.tar.gz"
+DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+
+echo "Starting Mealie backup..."
 
 mkdir -p /backups
-tar -czf "$DEST" -C /source .
 
-find /backups -type f -name 'mealie-data-*.tar.gz' | sort | head -n -14 | xargs -r rm -f
+# backup sqlite database safely
+sqlite3 /source/mealie.db ".backup /backups/mealie-db-$DATE.db"
 
-echo "Backup complete: $DEST"
+# backup images and uploads
+tar -czf /backups/mealie-assets-$DATE.tar.gz -C /source .
+
+# keep only last 14 backups
+ls -tp /backups | grep -v '/$' | tail -n +15 | xargs -I {} rm -- /backups/{}
+
+echo "Backup complete"
