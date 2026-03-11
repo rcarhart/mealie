@@ -16,14 +16,6 @@ services:
     volumes:
       - ./data:/app/data
 
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: mealie-cloudflared
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run --token ${CF_TUNNEL_TOKEN}
-    depends_on:
-      - mealie
-
   mealie-backup:
     image: alpine:3.20
     container_name: mealie-backup
@@ -51,4 +43,4 @@ services:
     command: >
       --schedule "0 0 5 * * *"
       --cleanup
-      mealie mealie-cloudflared mealie-backup
+      mealie mealie-backup
