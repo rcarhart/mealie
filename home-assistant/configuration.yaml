@@ -25,7 +25,7 @@ lovelace:
       title: Kitchen
       icon: mdi:chef-hat
       show_in_sidebar: true
-      filename: dashboards/kitchen.yaml
+      filename: dashboards/dashboard-kitchen.yaml
 
 template:
   - sensor:
