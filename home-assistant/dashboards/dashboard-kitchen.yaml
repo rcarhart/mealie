@@ -1,4 +1,4 @@
-title: Kitchen
+ï»¿title: Kitchen
 views:
   - title: Kitchen
     path: kitchen
@@ -34,7 +34,7 @@ views:
               - type: custom:mushroom-template-card
                 primary: Kitchen
                 secondary: >-
-                  {{ states('sensor.kitchen_today_label') }} · {{ states('sensor.kitchen_time') }}
+                  {{ states('sensor.kitchen_today_label') }} - {{ states('sensor.kitchen_time') }}
                 icon: mdi:chef-hat
                 multiline_secondary: false
                 fill_container: true
@@ -103,7 +103,7 @@ views:
                   const category = entity?.attributes?.category || '';
                   const image = entity?.attributes?.image_url || '';
                   const accent = 'var(--kitchen-accent, #C86B3C)';
-                  const meta = category ? `${type} · ${category}` : type;
+                  const meta = category ? `${type} - ${category}` : type;
                   return `
                     <div style="position:relative; min-height:460px; background:linear-gradient(180deg, rgba(11,11,11,0.05) 0%, rgba(11,11,11,0.25) 50%, rgba(11,11,11,0.78) 100%), url('${image}') center/cover no-repeat;">
                       <div style="position:absolute; inset:auto 18px 18px 18px; background:rgba(21,21,21,0.42); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:20px 20px 18px; box-shadow:0 20px 45px rgba(0,0,0,0.25);">
@@ -197,7 +197,7 @@ views:
               - type: custom:mushroom-template-card
                 primary: Ambient Temperature
                 secondary: >-
-                  {{ states('sensor.kitchen_environment_temperature') }} °F
+                  {{ states('sensor.kitchen_environment_temperature') }} F
                 icon: mdi:thermometer
                 fill_container: true
                 card_mod:
@@ -225,7 +225,7 @@ views:
               - type: custom:mushroom-template-card
                 primary: Forecast
                 secondary: >-
-                  {{ state_attr('weather.forecast_home', 'temperature') }} °F · {{ states('weather.forecast_home') }}
+                  {{ state_attr('weather.forecast_home', 'temperature') }} F - {{ states('weather.forecast_home') }}
                 icon: mdi:weather-partly-cloudy
                 fill_container: true
                 card_mod:
@@ -267,3 +267,4 @@ views:
                   box-shadow: var(--ha-card-box-shadow);
                   padding: 8px 10px 10px;
                 }
+

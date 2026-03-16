@@ -1,4 +1,4 @@
-- sensor:
+ï»¿- sensor:
     - name: kitchen_time
       unique_id: kitchen_time
       state: "{{ now().strftime('%I:%M %p').lstrip('0') }}"
@@ -62,7 +62,7 @@
 
     - name: kitchen_environment_temperature
       unique_id: kitchen_environment_temperature
-      unit_of_measurement: '°F'
+      unit_of_measurement: 'F'
       state: >-
         {{ state_attr('weather.forecast_home', 'temperature') if state_attr('weather.forecast_home', 'temperature') is not none else 'unknown' }}
 
@@ -71,3 +71,4 @@
       unit_of_measurement: '%'
       state: >-
         {{ state_attr('weather.forecast_home', 'humidity') if state_attr('weather.forecast_home', 'humidity') is not none else 'unknown' }}
+
