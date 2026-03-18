@@ -230,7 +230,7 @@ views:
                 }
 
           - type: todo-list
-            entity: todo.shopping_list
+            entity: todo.mealie_groceries
             title: ''
             hide_completed: false
             card_mod:
