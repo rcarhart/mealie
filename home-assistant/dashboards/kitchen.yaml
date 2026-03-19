@@ -125,6 +125,7 @@ views:
         view_layout:
           grid-area: meal
         entity: camera.recipes_rosscarhart_com
+        aspect_ratio: 16/9
         show_entity_picture: true
         show_name: false
         show_state: false
@@ -139,7 +140,7 @@ views:
             - border: 1px solid rgba(255,255,255,0.08)
             - box-shadow: 0 22px 44px rgba(0,0,0,0.34)
             - background: linear-gradient(145deg, rgba(26,26,28,0.96), rgba(14,14,16,0.98))
-            - min-height: 220px
+            - height: 210px
             - position: relative
           entity_picture:
             - width: 100%
@@ -339,7 +340,6 @@ views:
               return `<div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px;">${rows}</div>`;
             ]]]
 
-      - type: media-control
       - type: custom:mushroom-media-player-card
         view_layout:
           grid-area: media
@@ -384,6 +384,7 @@ views:
 
       - type: custom:button-card
         entity: camera.recipes_rosscarhart_com
+        aspect_ratio: 16/8
         show_entity_picture: true
         show_name: false
         show_state: false
@@ -395,7 +396,7 @@ views:
             - border: 1px solid rgba(255,255,255,0.08)
             - box-shadow: 0 18px 36px rgba(0,0,0,0.28)
             - background: linear-gradient(145deg, rgba(26,26,28,0.96), rgba(14,14,16,0.98))
-            - min-height: 240px
+            - height: 180px
           entity_picture:
             - width: 100%
             - height: 100%
