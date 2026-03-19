@@ -126,7 +126,7 @@ views:
         view_layout:
           grid-area: meal
         entity: camera.recipes_rosscarhart_com
-        aspect_ratio: 16/9
+        aspect_ratio: 16/7
         show_entity_picture: true
         show_name: false
         show_state: false
@@ -141,7 +141,7 @@ views:
             - border: 1px solid rgba(255,255,255,0.08)
             - box-shadow: 0 22px 44px rgba(0,0,0,0.34)
             - background: linear-gradient(145deg, rgba(26,26,28,0.96), rgba(14,14,16,0.98))
-            - height: 210px
+            - height: 190px
             - position: relative
           entity_picture:
             - width: 100%
