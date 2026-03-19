@@ -164,6 +164,11 @@ views:
                   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
                   min-height: 260px;
                 }
+                .empty,
+                .message,
+                .container .message {
+                  display: none !important;
+                }
 
       # Weekly meal plan:
       # Horizontal strip showing only meals from the current Sunday-Saturday week.
