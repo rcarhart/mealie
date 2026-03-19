@@ -36,45 +36,11 @@ views:
 
     cards:
       # Header stack:
-      # 1. Main title/date banner
-      # 2. Status chips for meal, shopping count, music, and weather
+      # Status chips for meal, shopping count, music, and weather.
       - type: vertical-stack
         view_layout:
           grid-area: header
         cards:
-          - type: custom:mushroom-template-card
-            primary: Kitchen
-            secondary: >
-              {% set world = states('sensor.worldclock_sensor') %}
-              {{ now().strftime('%A, %B') }} {{ now().day }} - {{ world if world not in ['unknown', 'unavailable', 'None'] else states('sensor.kitchen_time') }}
-            icon: mdi:chef-hat
-            icon_color: amber
-            fill_container: true
-            multiline_secondary: false
-            card_mod:
-              style: |
-                ha-card {
-                  border-radius: 28px;
-                  padding: 14px 18px;
-                  background:
-                    radial-gradient(circle at top right, rgba(255, 193, 7, 0.16), transparent 28%),
-                    linear-gradient(145deg, rgba(28, 28, 30, 0.96), rgba(18, 18, 20, 0.98));
-                  border: 1px solid rgba(255, 255, 255, 0.07);
-                  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
-                }
-                mushroom-shape-icon {
-                  --shape-color: rgba(255, 193, 7, 0.18) !important;
-                }
-                .primary {
-                  font-size: 2.2rem !important;
-                  font-weight: 700 !important;
-                  letter-spacing: -0.04rem;
-                }
-                .secondary {
-                  font-size: 1rem !important;
-                  opacity: 0.82;
-                }
-
           - type: custom:mushroom-chips-card
             alignment: justify
             chips:
@@ -126,12 +92,12 @@ views:
             card_mod:
               style: |
                 ha-card {
-                  margin-top: 10px;
-                  padding: 6px;
+                  padding: 8px;
                   border-radius: 24px;
-                  background: rgba(20, 20, 22, 0.78);
-                  border: 1px solid rgba(255, 255, 255, 0.06);
-                  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+                  background: var(--kitchen-glass);
+                  backdrop-filter: blur(18px);
+                  border: 1px solid var(--kitchen-glass-border);
+                  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16);
                 }
 
       # Featured dinner card:
