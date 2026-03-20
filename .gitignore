@@ -13,6 +13,7 @@ home-assistant/*.log.*
 home-assistant/*.db
 home-assistant/*.db-*
 home-assistant/secrets.yaml
+home-assistant/backup.txt
 
 # Home Assistant downloaded/frontend dependencies
 home-assistant/custom_components/hacs/
