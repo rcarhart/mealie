@@ -255,24 +255,12 @@ views:
             ]]]
 
       # Media section:
-      # Replaces the generic kitchen speaker cards with the SpotifyPlus player.
-      - type: custom:spotifyplus-card
+      # Simple now-playing card for Spotify in the kitchen.
+      - type: media-control
         view_layout:
           grid-area: media
         entity: media_player.spotify_rcarhart2
-        sections:
-          - player
-          - devices
-          - playlistfavorites
-          - recents
-        sectionDefault: player
-        playerHeaderTitle: "{player.source}"
-        playerHeaderArtistTrack: "{player.media_artist} - {player.media_title}"
-        playerHeaderAlbum: "{player.media_album_name}"
-        playerHeaderNoMediaPlayingText: "Ready for music"
-        deviceBrowserItemsPerRow: 1
-        playlistFavBrowserItemsPerRow: 2
-        recentBrowserItemsPerRow: 2
+        theme: Frosted Glass Dark
 
   # Recipe subview:
   # Opens from the featured dinner card and keeps kiosk users inside Home Assistant.
