@@ -34,23 +34,82 @@ views:
     cards:
       # Featured dinner card:
       # Uses the Mealie recipe image camera entity and opens the recipe subview.
-      - type: vertical-stack
+      - type: custom:button-card
         view_layout:
           grid-area: meal
-        cards:
-          - type: markdown
-            title: Tonight
-            content: >
-              ## {{ states('sensor.mealie_todays_meal') }}
-
-              Tap the image below to view ingredients and directions.
-          - type: picture-entity
-            entity: camera.recipes_rosscarhart_com
-            name: Tonight's Recipe
-            show_state: false
-            tap_action:
-              action: navigate
-              navigation_path: /kitchen-dashboard/kitchen-recipe
+        entity: camera.recipes_rosscarhart_com
+        aspect_ratio: 16/12
+        show_entity_picture: true
+        show_name: false
+        show_state: false
+        tap_action:
+          action: navigate
+          navigation_path: /kitchen-dashboard/kitchen-recipe
+        styles:
+          card:
+            - padding: 0
+            - border-radius: 30px
+            - overflow: hidden
+            - border: 1px solid rgba(255,255,255,0.08)
+            - box-shadow: 0 22px 44px rgba(0,0,0,0.34)
+            - background: linear-gradient(145deg, rgba(26,26,28,0.96), rgba(14,14,16,0.98))
+            - height: 500px
+            - position: relative
+          entity_picture:
+            - width: 100%
+            - height: 100%
+            - object-fit: cover
+            - filter: saturate(1.02) contrast(1.02)
+          custom_fields:
+            shade:
+              - position: absolute
+              - inset: 0
+              - background: linear-gradient(to top, rgba(6, 6, 8, 0.88) 12%, rgba(6, 6, 8, 0.2) 45%, rgba(6, 6, 8, 0.04) 72%)
+            badge:
+              - position: absolute
+              - top: 16px
+              - left: 16px
+              - padding: 6px 10px
+              - border-radius: 999px
+              - background: rgba(15, 15, 17, 0.58)
+              - backdrop-filter: blur(12px)
+              - border: 1px solid rgba(255,255,255,0.08)
+              - color: rgba(255,255,255,0.92)
+              - font-size: 0.72rem
+              - font-weight: 600
+              - letter-spacing: 0.08rem
+              - text-transform: uppercase
+            panel:
+              - position: absolute
+              - left: 18px
+              - bottom: 18px
+              - width: 52%
+              - max-width: 360px
+              - padding: 14px 16px
+              - border-radius: 20px
+              - background: rgba(16, 16, 18, 0.34)
+              - backdrop-filter: blur(18px)
+              - border: 1px solid rgba(255,255,255,0.09)
+              - box-shadow: 0 18px 30px rgba(0,0,0,0.2)
+              - text-align: left
+        custom_fields:
+          shade: ""
+          badge: Tonight
+          panel: >
+            [[[
+              const meal = states["sensor.mealie_todays_meal"]?.state || "No meal planned";
+              return `
+                <div style="font-size: 1.22rem; font-weight: 700; line-height: 1.1; letter-spacing: -0.02rem; color: rgba(255,255,255,0.98); margin-bottom: 6px;">
+                  ${meal}
+                </div>
+                <div style="font-size: 0.82rem; color: rgba(255,255,255,0.76); margin-bottom: 10px;">
+                  Tap to view ingredients and directions.
+                </div>
+                <div style="display: inline-flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.10); color: rgba(255,255,255,0.95); font-size: 0.84rem; font-weight: 600;">
+                  View recipe
+                </div>
+              `;
+            ]]]
 
       # Shopping section:
       # Header card plus the official Mealie to-do list entity for bi-directional sync.
@@ -66,36 +125,154 @@ views:
             icon_color: cyan
             multiline_secondary: true
             fill_container: true
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 30px 30px 0 0;
+                  padding: 18px 20px 12px;
+                  background: linear-gradient(145deg, rgba(28, 28, 30, 0.96), rgba(17, 17, 19, 0.98));
+                  border: 1px solid rgba(255, 255, 255, 0.07);
+                  border-bottom: none;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                }
+                mushroom-shape-icon {
+                  --shape-color: rgba(106, 214, 224, 0.16) !important;
+                }
+                .primary {
+                  font-size: 1.8rem !important;
+                  font-weight: 700 !important;
+                  letter-spacing: -0.03rem;
+                }
+                .secondary {
+                  font-size: 0.96rem !important;
+                  line-height: 1.5 !important;
+                  opacity: 0.76;
+                }
 
           - type: todo-list
             entity: todo.mealie_groceries
             title: ''
             hide_completed: false
+            card_mod:
+              style: |
+                ha-card {
+                  border-radius: 0 0 30px 30px;
+                  padding: 0 10px 14px;
+                  background: linear-gradient(145deg, rgba(28, 28, 30, 0.96), rgba(17, 17, 19, 0.98));
+                  border: 1px solid rgba(255, 255, 255, 0.07);
+                  border-top: none;
+                  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                  min-height: 260px;
+                }
+                .empty,
+                .message,
+                .container .message {
+                  display: none !important;
+                }
 
       # Weekly meal plan:
       # Horizontal strip showing only meals from the current Sunday-Saturday week.
-      - type: markdown
+      - type: custom:button-card
         view_layout:
           grid-area: weekly
-        title: Weekly Meal Plan
-        content: >
-          {% set meals = state_attr('sensor.mealie_weekly_plan', 'items') or [] %}
-          {% if meals %}
-          {% for item in meals %}
-          - **{{ as_datetime(item.date).strftime('%A') if item.date else 'Planned' }}:** {{ item.recipe.name if item.recipe is defined and item.recipe and item.recipe.name is defined else item.title if item.title is defined else 'Meal planned' }}
-          {% endfor %}
-          {% else %}
-          Weekly plan is loading from Mealie.
-          {% endif %}
+        entity: sensor.mealie_weekly_plan
+        show_icon: true
+        show_name: true
+        show_state: false
+        name: Weekly Meal Plan
+        icon: mdi:calendar-week
+        styles:
+          grid:
+            - grid-template-areas: '"i n" "body body"'
+            - grid-template-columns: min-content 1fr
+            - grid-template-rows: min-content 1fr
+            - column-gap: 12px
+          card:
+            - padding: 24px
+            - border-radius: 30px
+            - background: linear-gradient(145deg, rgba(28,28,30,0.96), rgba(17,17,19,0.98))
+            - border: 1px solid rgba(255,255,255,0.07)
+            - box-shadow: 0 20px 40px rgba(0,0,0,0.3)
+            - min-height: 0
+          icon:
+            - color: rgba(240, 169, 91, 0.95)
+            - width: 30px
+          name:
+            - justify-self: start
+            - align-self: center
+            - font-size: 1.8rem
+            - font-weight: 700
+            - letter-spacing: -0.03rem
+          custom_fields:
+            body:
+              - margin-top: 20px
+              - text-align: left
+        custom_fields:
+          body: >
+            [[[
+              const meals = entity?.attributes?.items || [];
+              if (!meals.length) {
+                return `<div style="padding: 24px 0 8px; color: rgba(255,255,255,0.78); font-size: 1rem;">Weekly plan is loading from Mealie.</div>`;
+              }
+
+              const today = new Date();
+              today.setHours(12, 0, 0, 0);
+              const weekStart = new Date(today);
+              weekStart.setDate(today.getDate() - today.getDay());
+              weekStart.setHours(0, 0, 0, 0);
+
+              const weekEnd = new Date(weekStart);
+              weekEnd.setDate(weekStart.getDate() + 6);
+              weekEnd.setHours(23, 59, 59, 999);
+
+              const weeklyMeals = meals.filter((item) => {
+                if (!item.date) return false;
+                const itemDate = new Date(`${item.date}T12:00:00`);
+                return itemDate >= weekStart && itemDate <= weekEnd;
+              });
+
+              if (!weeklyMeals.length) {
+                return `<div style="padding: 24px 0 8px; color: rgba(255,255,255,0.78); font-size: 1rem;">No meals planned for this week yet.</div>`;
+              }
+
+              const formatter = new Intl.DateTimeFormat("en-US", { weekday: "long" });
+              const rows = weeklyMeals.map((item) => {
+                const recipe = item.recipe || {};
+                const mealName = recipe.name || item.title || "Meal planned";
+                const day = item.date ? formatter.format(new Date(`${item.date}T12:00:00`)) : "Planned";
+                return `
+                  <div style="min-width:148px; padding:12px 14px; border-radius:20px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06);">
+                    <div style="color:rgba(255,255,255,0.56); font-size:0.78rem; font-weight:700; letter-spacing:0.08rem; text-transform:uppercase; margin-bottom:8px;">
+                      ${day}
+                    </div>
+                    <div style="color:rgba(255,255,255,0.97); font-size:0.92rem; line-height:1.3; font-weight:600;">
+                      ${mealName}
+                    </div>
+                  </div>
+                `;
+              }).join("");
+              return `<div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px;">${rows}</div>`;
+            ]]]
 
       # Media section:
-      # Spotify section:
-      # Simple now-playing card for the kitchen view.
-      - type: media-control
+      # Replaces the generic kitchen speaker cards with the SpotifyPlus player.
+      - type: custom:spotifyplus-card
         view_layout:
           grid-area: media
         entity: media_player.spotify_rcarhart2
-        theme: Frosted Glass Dark
+        sections:
+          - player
+          - devices
+          - playlistfavorites
+          - recents
+        sectionDefault: player
+        playerHeaderTitle: "{player.source}"
+        playerHeaderArtistTrack: "{player.media_artist} - {player.media_title}"
+        playerHeaderAlbum: "{player.media_album_name}"
+        playerHeaderNoMediaPlayingText: "Ready for music"
+        deviceBrowserItemsPerRow: 1
+        playlistFavBrowserItemsPerRow: 2
+        recentBrowserItemsPerRow: 2
 
   # Recipe subview:
   # Opens from the featured dinner card and keeps kiosk users inside Home Assistant.
@@ -123,8 +300,22 @@ views:
         entity: camera.recipes_rosscarhart_com
         aspect_ratio: 16/8
         show_entity_picture: true
-        name: Recipe Image
+        show_name: false
         show_state: false
+        styles:
+          card:
+            - padding: 0
+            - border-radius: 28px
+            - overflow: hidden
+            - border: 1px solid rgba(255,255,255,0.08)
+            - box-shadow: 0 18px 36px rgba(0,0,0,0.28)
+            - background: linear-gradient(145deg, rgba(26,26,28,0.96), rgba(14,14,16,0.98))
+            - height: 180px
+          entity_picture:
+            - width: 100%
+            - height: 100%
+            - object-fit: cover
+            - filter: saturate(1.02) contrast(1.02)
 
       # Ingredients card:
       # Prefers Mealie's display/original text fields, then falls back to structured parts.
@@ -170,6 +361,15 @@ views:
           {% else %}
           Ingredients are loading.
           {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              border-radius: 28px;
+              padding: 8px 12px 12px;
+              background: linear-gradient(145deg, rgba(28, 28, 30, 0.96), rgba(16, 16, 18, 0.98));
+              border: 1px solid rgba(255, 255, 255, 0.07);
+              box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26);
+            }
 
       # Directions card:
       # Renders each Mealie instruction step in order.
@@ -203,3 +403,12 @@ views:
           {% else %}
           Directions are loading.
           {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              border-radius: 28px;
+              padding: 8px 12px 12px;
+              background: linear-gradient(145deg, rgba(28, 28, 30, 0.96), rgba(16, 16, 18, 0.98));
+              border: 1px solid rgba(255, 255, 255, 0.07);
+              box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26);
+            }
