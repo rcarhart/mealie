@@ -22,6 +22,8 @@ lovelace:
       type: module
     - url: /local/community/spotifyplus_card/spotifyplus_card.js
       type: module
+    - url: /local/community/week-planner-card-plus/week-planner-card-plus.js
+      type: module
   dashboards:
     kitchen-dashboard:
       mode: yaml
