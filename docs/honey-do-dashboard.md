@@ -20,13 +20,35 @@ Features:
 
 ## Grocy Version
 
-The Grocy version is scaffolded and intended to be wired after the Grocy integration is installed.
+The Grocy version is now wired for the expected Grocy entities and the custom integration has been copied into:
+
+- `home-assistant/custom_components/grocy`
+
+The original cloned source is currently also present in:
+
+- `home-assistant/custom_components/grocy-repo`
 
 Recommended Grocy modeling:
 
 - recurring chores as Grocy chores
 - one-off honey-do items as Grocy tasks
 - Ross and Kelly as assignment labels, categories, or task naming convention
+
+Home Assistant setup after restart:
+
+1. Add the `Grocy` integration in Settings > Devices & Services
+2. Use URL `http://192.168.86.47`
+3. Use port `9192`
+4. Paste the Grocy API key in the config flow
+5. Enable:
+   - `sensor.grocy_tasks`
+   - `sensor.grocy_chores`
+   - `binary_sensor.grocy_overdue_tasks`
+   - `binary_sensor.grocy_overdue_chores`
+
+The Grocy dashboard uses summary helpers from:
+
+- `packages/grocy_honey_do.yaml`
 
 ## Initial Projects
 

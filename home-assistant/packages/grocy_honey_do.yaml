@@ -1,0 +1,37 @@
+template:
+  - sensor:
+      - name: honey_do_grocy_projects_open
+        unique_id: honey_do_grocy_projects_open
+        state: "{{ states('sensor.grocy_tasks') | int(0) }}"
+      - name: honey_do_grocy_projects_overdue
+        unique_id: honey_do_grocy_projects_overdue
+        state: "{{ state_attr('binary_sensor.grocy_overdue_tasks', 'count') | default(0, true) | int(0) }}"
+      - name: honey_do_grocy_chores_open
+        unique_id: honey_do_grocy_chores_open
+        state: "{{ states('sensor.grocy_chores') | int(0) }}"
+      - name: honey_do_grocy_chores_overdue
+        unique_id: honey_do_grocy_chores_overdue
+        state: "{{ state_attr('binary_sensor.grocy_overdue_chores', 'count') | default(0, true) | int(0) }}"
+      - name: honey_do_grocy_due_today
+        unique_id: honey_do_grocy_due_today
+        state: >
+          {% set today = now().strftime('%Y-%m-%d') %}
+          {% set tasks = state_attr('sensor.grocy_tasks', 'tasks') | default([], true) %}
+          {% set chores = state_attr('sensor.grocy_chores', 'chores') | default([], true) %}
+          {% set due_tasks = tasks | selectattr('due_date', 'defined') | selectattr('due_date', 'equalto', today) | list | count %}
+          {% set due_chores = chores
+            | selectattr('next_estimated_execution_time', 'defined')
+            | selectattr('next_estimated_execution_time', 'search', today)
+            | list | count %}
+          {{ due_tasks + due_chores }}
+      - name: honey_do_grocy_unassigned_chores
+        unique_id: honey_do_grocy_unassigned_chores
+        state: >
+          {% set chores = state_attr('sensor.grocy_chores', 'chores') | default([], true) %}
+          {{
+            chores
+            | rejectattr('user_id', 'defined')
+            | list
+            | count
+          }}
+
