@@ -44,6 +44,12 @@ lovelace:
       icon: mdi:clipboard-check-outline
       show_in_sidebar: true
       filename: dashboards/honey-do-grocy.yaml
+    honey-do-projects-dashboard:
+      mode: yaml
+      title: Honey Do Projects
+      icon: mdi:hammer-wrench
+      show_in_sidebar: true
+      filename: dashboards/honey-do-projects.yaml
 
 template:
   - sensor:

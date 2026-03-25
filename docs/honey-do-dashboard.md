@@ -1,9 +1,10 @@
 # Honey Do Dashboard
 
-This repo now contains two Home Assistant dashboard paths for household chores and projects:
+This repo now contains separate Home Assistant dashboard paths for household chores and projects:
 
 - `dashboards/honey-do.yaml`
 - `dashboards/honey-do-grocy.yaml`
+- `dashboards/honey-do-projects.yaml`
 
 ## Native Home Assistant Version
 
@@ -20,14 +21,14 @@ Features:
 
 ## Grocy Version
 
-The Grocy version is wired for the expected Grocy entities and the custom integration has been copied into:
+The Grocy chores version is wired for the expected Grocy entities and the custom integration has been copied into:
 
 - `home-assistant/custom_components/grocy`
 
 Recommended Grocy modeling:
 
 - recurring chores as Grocy chores
-- one-off honey-do items as Grocy tasks
+- one-off honey-do items as Grocy tasks on the separate projects dashboard
 - Ross and Kelly as task categories
 - owner also included in task names for clarity
 - chore claiming handled in Home Assistant helpers for a better wall-dashboard UX
@@ -44,7 +45,7 @@ Home Assistant setup:
    - `binary_sensor.grocy_overdue_tasks`
    - `binary_sensor.grocy_overdue_chores`
 
-The Grocy dashboard uses summary helpers from:
+The Grocy chores and projects dashboards use shared summary/helpers from:
 
 - `packages/grocy_honey_do.yaml`
 
