@@ -21,6 +21,7 @@ homelab/
 ├─ app/
 ├─ infrastructure/
 ├─ home-assistant/
+├─ archive/
 └─ docs/
 ```
 
@@ -97,6 +98,12 @@ Git should not contain:
 - runtime databases
 - generated session state
 - logs and transient artifacts
+
+### `archive/`
+Use this for lightweight in-repo archive markers and migration notes.
+
+Do not place raw runtime dumps, secrets, databases, or generated Home Assistant state in git archives.
+If a legacy system needs to be retained temporarily, keep the heavy/raw copy outside the repo and record its status here with a short README.
 
 ## Per-service Docker pattern
 
