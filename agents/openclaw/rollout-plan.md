@@ -31,12 +31,14 @@ Add:
 - Mealie dev worker
 - security/repo auditor
 - shared skills for repo conventions and prod safety
+- Mealie dev-preview workflow documentation
 
 Defaults:
 
 - use a separate Mealie source checkout for code changes
 - use isolated preview containers for Mealie review
 - continue keeping production Mealie image-based
+- keep preview data, env, and ports fully separate from production
 
 ## Phase 3 - controlled operational helpers
 

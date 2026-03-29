@@ -54,3 +54,11 @@ Avoid early:
 
 Document the Discord channel configuration and approval language before enabling any production-impacting workflows.
 Keep the first version simple and explicit.
+
+For the first rollout, prefer:
+
+- Discord DMs for highest-trust approvals
+- one private guild channel for the main agent
+- internal worker delegation rather than exposing each worker directly
+
+See also: `agents/openclaw/discord-setup-checklist.md`.

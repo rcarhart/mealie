@@ -17,6 +17,13 @@ Primary scope:
 - Mealie preview container configuration and review docs
 - related design notes for UI and UX proposals
 
+Recommended dev-source location:
+
+- outside the production homelab repo when possible, such as `/home/docker/dev/mealie-src`
+- if kept near the repo for documentation purposes, use a clearly separate path such as `dev/mealie-src/`
+
+The key rule is to keep the source-code workspace and preview runtime clearly separate from the production image-based deployment path.
+
 ## Core workflow
 
 This worker should use a split workflow:
